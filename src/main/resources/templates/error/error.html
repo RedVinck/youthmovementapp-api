@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head (title='Error!')">
+</head>
+<body>
+<header th:replace="fragments/header::header(headerTitle='Error!')">
+</header>
+<main>
+    <div class="container-lg flex justify-content-center">
+        <div class="card" style="width: 18rem;"><!--<img class="card-img-top" src="../../img/errorGeneral.png" alt="Card image cap">-->
+            <div class="card-body"><h5 class="card-title" th:text="#{error.general.title}"></h5>
+                <p class="card-text" th:text="#{error.general.text}"></p><a href="/index" class="btn btn-primary"
+                                                                            th:text="#{error.backHome}"></a></div>
+        </div>
+    </div>
+</main>
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>
