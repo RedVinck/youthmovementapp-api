@@ -1,22 +1,51 @@
 package be.tandro.youthmovementapp.api.model;
 
-import javax.persistence.*;
-import javax.validation.Valid;
+import org.hibernate.annotations.Formula;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+
+/**
+ * Person class is the individual person.
+ */
 @Entity
 public class Person {
 
+    /**
+     * This is the id of the person, this is important for the database
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
+    /**
+     * This is the family name of a person
+     */
     private String name;
 
+
+    /**
+     * This is the first name of a person
+     */
     private String surname;
 
+
+    /**
+     * This is the email of the person it has to be unique
+     */
+    @Column(unique = true)
+    @NotBlank(message = "email.is.missing")
+    private String email;
+
+    /**
+     * This is the group the individual is in
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @Valid
-    private Branch branch;
+    private Group group;
 
 
     @OneToOne
@@ -27,8 +56,10 @@ public class Person {
 
     private Integer memberNumber;
 
-    private Integer age;
+    private LocalDate birthday;
 
+    @Formula("YEAR(CURDATE()) - YEAR(birthday)")
+    private int age;
 
     public long getId() {
         return id;
@@ -54,13 +85,6 @@ public class Person {
         this.surname = surname;
     }
 
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
-    }
 
     public Balance getBalance() {
         return balance;
@@ -86,11 +110,33 @@ public class Person {
         this.memberNumber = memberNumber;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+        public LocalDate getBirthday() {
+        return birthday;
+    }
+
+
+    public void setBirthday(LocalDate birthday) {
+        System.out.println(birthday);
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

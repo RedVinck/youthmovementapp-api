@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head::head (title='Overview Players')">
+</head>
+<body>
+<header th:replace="fragments/header::header(headerTitle='Overview Players')">
+</header>
+<main>
+    <div class="container-lg" th:switch="${persons}">
+        <h2 th:case="null" th:text="#{persons.overview.nul}"></h2>
+        <h2 th:case="*" th:text="#{persons.overview.filled}"></h2>
+        <table class="table table-striped table-responsive-lg">
+            <thead>
+            <tr>
+                <th th:text="#{persons.overview.number}"></th>
+                <th th:text="#{persons.overview.name}"></th>
+                <th th:text="#{persons.overview.surname}"></th>
+                <th th:text="#{persons.overview.email}"></th>
+                <th th:text="#{persons.overview.age}"></th>
+                <th th:text="#{persons.overview.birthday}"></th>
+                <th th:text="#{persons.overview.group}"></th>
+                <th th:text="#{persons.overview.balance}"></th>
+                <th th:text="#{persons.overview.role}"></th>
+                <th sec:authorize="hasRole('ADMIN')" th:text="#{persons.overview.update}"></th>
+                <th sec:authorize="hasRole('ADMIN')" th:text="#{persons.overview.remove}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person:${persons}">
+                <td th:text="${person.memberNumber}"></td>
+                <td th:text="${person.name}"></td>
+                <td th:text="${person.surname}"></td>
+                <td th:text="${person.email}"></td>
+                <td th:text="${person.age}"></td>
+                <td th:text="${person.birthday}"></td>
+                <td th:text="${person.group}"></td>
+                <td th:text="${person.balance}"></td>
+                <td th:text="${person.role}"></td>
+                <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-primary" th:href="@{/person/update/{id}(id=${person.id})}" th:text="#{update}"></a></td>
+                <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-outline-danger" th:href="@{/person/remove/{id}(id=${person.id})}" type="button" th:text="#{remove}">
+                    <svg class="bi bi-trash" fill="currentColor" height="16" viewBox="0 0 16 16"
+                         width="16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                              fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+                </td>
+            </tr>
+            <tr sec:authorize="hasRole('ADMIN')" class="bg-white">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td >
+                    <a sec:authorize="hasRole('ADMIN')" class="btn btn-outline-success" href="/person/add" type="button" th:text="#{add}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>
